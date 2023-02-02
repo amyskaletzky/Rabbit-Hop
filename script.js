@@ -21,3 +21,19 @@ function resizeEverything() {
     container.style.height = `${containerHeight * containerToPixelScale}px`
 
 }
+
+
+let lastUpdateTime
+function update(timeNow) {
+    if (lastUpdateTime === null) {
+        lastUpdateTime = timeNow
+        window.requestAnimationFrame(update)
+        return
+    }
+
+    const diff = timeNow - lastUpdateTime
+
+    lastUpdateTime = timeNow
+    window.requestAnimationFrame(update)
+}
+window.requestAnimationFrame(update) 
