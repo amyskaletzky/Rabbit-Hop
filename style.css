@@ -4,13 +4,44 @@
     padding: 0;
 }
 
+
 body {
     background-color: #90bdeb;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* flex-direction: column; */
 }
 
-.ground {}
+.container {
+    /* overflow: hidden; */
+    position: relative;
+    width: 300%;
+    height: 200px;
+}
+
+.score {
+    position: absolute;
+    font-size: 4vmin;
+    top: 1vmin;
+    right: 1vmin;
+}
+
+.start {}
+
+.ground {
+    --left: 0;
+    position: absolute;
+    bottom: 0;
+    left: calc(var(--left) * 1%);
+}
+
+.rabbit {
+    --bottom: 0;
+    position: absolute;
+    height: 40%;
+    top: 0;
+    bottom: calc(var(--left) * 1%);
+}
+
+/* @keyframes {} */
