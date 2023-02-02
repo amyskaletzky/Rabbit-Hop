@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    user-select: none;
 }
 
 
@@ -14,10 +15,8 @@ body {
 }
 
 .container {
-    /* overflow: hidden; */
+    overflow: hidden;
     position: relative;
-    width: 300%;
-    height: 200px;
 }
 
 .score {
@@ -27,21 +26,39 @@ body {
     right: 1vmin;
 }
 
-.start {}
+.start {
+    position: absolute;
+    font-size: 5vmin;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .ground {
     --left: 0;
     position: absolute;
+    width: 200%;
     bottom: 0;
     left: calc(var(--left) * 1%);
 }
 
 .rabbit {
-    --bottom: 0;
+    --bottom: 18;
     position: absolute;
-    height: 40%;
-    top: 0;
-    bottom: calc(var(--left) * 1%);
+    left: 1%;
+    height: 30%;
+    top: 30;
+    bottom: calc(var(--bottom) * 1%);
 }
 
-/* @keyframes {} */
+.easter-egg {
+    position: absolute;
+    left: calc(var(--left) * 1%);
+    height: 30%;
+    bottom: calc(var(--bottom) * 1%);
+    /* or bottom: 0 ? */
+}
+
+.hide {
+    display: none;
+}

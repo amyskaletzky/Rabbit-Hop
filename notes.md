@@ -34,6 +34,8 @@ starts at 0 -> as soon as start game (500ms)
 # sky bg
 backmost layer, unnaffected by everything + slower speed 
 -> later design: starry night + some gradient sunrise/set + sunny day
+maybe to start with clouds moving and the sun and moon and stars
+try to use animation after certain time (settimeout) for sun to go down and moon to come up 
 
 # audio
 - hop
@@ -44,3 +46,12 @@ backmost layer, unnaffected by everything + slower speed
 
 # bonus
 -carrots for extra points
+-broken egg if you hit it
+
+# click on any button or mouseclick to start game
+add class hide to hide after :)
+and start game
+event click + keydown
+
+# change rabbit img (run/still/hop)
+using js -> 
