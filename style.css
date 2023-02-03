@@ -17,6 +17,7 @@ body {
 .container {
     overflow: hidden;
     position: relative;
+    width: 100%;
 }
 
 .score {
@@ -29,7 +30,7 @@ body {
 .start {
     position: absolute;
     font-size: 5vmin;
-    top: 20%;
+    top:20%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
