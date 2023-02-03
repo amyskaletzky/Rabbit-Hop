@@ -1,81 +1,78 @@
-'use strict'
-const containerWidth = 100
-const containerHeight = 30
+import { setGround } from "./groundMoves"
+import { updatedGround} from "./groundMoves"
+const CONTAINER_WIDTH = 100
+const CONTAINER_HEIGHT = 30
+const INCREASE_SPEED_BY = 0.00001
+
+
 const ground = document.querySelector('.ground')
 const rabbit = document.querySelector('.rabbit')
 const container = document.querySelector('[data-container]')
+const scoreElement = document.querySelector('[data-score]')
+const startElement = document.querySelector('[data-start]')
+
 resizeEverything()
 window.addEventListener('resize', resizeEverything)
+document.addEventListener('keydown', startGame, { once: true }) // making sure it only calls the function once
 
-
-function resizeEverything() {
-    let containerToPixelScale
-    if (window.innerWidth / window.innerHeight < containerWidth / containerHeight) {
-        containerToPixelScale = window.innerWidth / containerWidth
-    } else {
-        containerToPixelScale = window.innerHeight / containerHeight
-    }
-
-    container.style.width = `${containerWidth * containerToPixelScale}px`
-    container.style.height = `${containerHeight * containerToPixelScale}px`
-
-}
-
+setGround()
 
 let lastUpdateTime
+let speedScale
+let score
+let hasGameStarted = false
 function update(timeNow) {
     if (lastUpdateTime === null) {
         lastUpdateTime = timeNow
-        window.requestAnimationFrame(update)
+        window.requestAnimationFrame(update)                //write explanation
         return
     }
 
+    updatedGround()
     const diff = timeNow - lastUpdateTime
-    console.log(diff);
-    updatedMovingGround(diff);
+
+    // add another parameter to updateGround(diff, speedScale)
+    increaseSpeedGradually(diff)
+    updateScore(diff)
 
     lastUpdateTime = timeNow
     window.requestAnimationFrame(update)
 }
+window.requestAnimationFrame(update)
 
-window.requestAnimationFrame(update) 
-
-//movingGround --Keren's part
-const speed = .05;
-const groundElements = document.querySelectorAll("[date-groundMoves]")
-extendGround();
-
-//In this function we are taking the current positing and updating it
-///by taking a value from a css and converting it into a js value and back again to css variable
-
-
-//Due to lines 46,47 we have to make 3 functions
-//because everything on css is a string we create a function that convert to a float(number)
-/// and if there is not value just defult '0'
-
-function getCustomProp(elem, prop) {
-    return parseFloat(getComputedStyle(elem).getPropertyValue(prop)) || 0
-}
-//After converting the values to float we need to use the computerd values
-function setCustomProp(elem, prop, value) {
-    elem.style.setProperty(prop, value)
+function increaseSpeedGradually(diff) {
+    speedScale += diff * INCREASE_SPEED_BY          // to cause the ground to gradually move faster, like in the original game so it becomes more and more difficult
 }
 
-function finalIncrementCustomProp(elem, prop, inc){
-    setCustomProp(elem,prop,getCustomProp(elem,prop) + inc)
+function updateScore(diff) {
+    if (!hasGameStarted) score = 0
+    score += diff * 0.01      // one point added to score for every 100ms that pass
+    scoreElement.textContent = Math.floor(score)
 }
 
-function updatedMovingGround(diff) { ///moves to the left every single time
-    groundElements.forEach(ground => {
-        finalIncrementCustomProp(ground, "--left",diff * speed * -1)
 
-    if (getCustomProp( ground, "--left")<= -200){
-        finalIncrementCustomProp(ground, "--left", 400)
+function startGame() {
+    hasGameStarted = true
+    lastUpdateTime = null
+    speedScale = 1
+    score = 0
+    startElement.classList.add('hide')
+    // call the set up ground function here !!!
+    window.requestAnimationFrame(update)
+}
+
+
+function resizeEverything() {
+    let containerToPixelScale
+    if (window.innerWidth / window.innerHeight < CONTAINER_WIDTH / CONTAINER_HEIGHT) {
+        containerToPixelScale = window.innerWidth / CONTAINER_WIDTH
+    } else {
+        containerToPixelScale = window.innerHeight / CONTAINER_HEIGHT
     }
-});
-} 
 
-function extendGround() {
-    setCustomProp(groundElements[0], "--left", 0)
-    setCustomProp(groundElements[1], "--left",containerWidth, 200)    
+    container.style.width = `${CONTAINER_WIDTH * containerToPixelScale}px`
+    container.style.height = `${CONTAINER_HEIGHT * containerToPixelScale}px`
+    // to make sure everything inside container is responsive (rabbit and ground, etc)
 }
+
+
