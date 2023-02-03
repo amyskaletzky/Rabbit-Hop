@@ -1,5 +1,3 @@
-updated by Keren
-
 # moving rabbit
 need to addeventlisteners to doc for 'up', 'space' + 'mousedown' -> to jump
 use keyframes 'hop' to set height of hop
