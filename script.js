@@ -1,4 +1,6 @@
 'use strict'
+import { updateGround, setupGround } from "./groundMoves.js"
+import { updateRabbit, setUpRabbit } from './rabbit.js'
 
 const CONTAINER_WIDTH = 100
 const CONTAINER_HEIGHT = 30
@@ -15,7 +17,6 @@ resizeEverything()
 window.addEventListener('resize', resizeEverything)
 document.addEventListener('keydown', startGame, { once: true }) // making sure it only calls the function once
 
-
 let lastUpdateTime
 let speedScale
 let score
@@ -26,17 +27,18 @@ function update(timeNow) {
         window.requestAnimationFrame(update)                //write explanation
         return
     }
-
     const diff = timeNow - lastUpdateTime
+    updateGround(diff)
 
     // add another parameter to updateGround(diff, speedScale)
+    updateRabbit(diff, speedScale)
     increaseSpeedGradually(diff)
     updateScore(diff)
 
     lastUpdateTime = timeNow
     window.requestAnimationFrame(update)
 }
-window.requestAnimationFrame(update)
+// window.requestAnimationFrame(update)
 
 function increaseSpeedGradually(diff) {
     speedScale += diff * INCREASE_SPEED_BY          // to cause the ground to gradually move faster, like in the original game so it becomes more and more difficult
@@ -54,7 +56,10 @@ function startGame() {
     lastUpdateTime = null
     speedScale = 1
     score = 0
+    setupGround()
+
     startElement.classList.add('hide')
+    setUpRabbit(hasGameStarted)
     // call the set up ground function here !!!
     window.requestAnimationFrame(update)
 }
@@ -72,5 +77,6 @@ function resizeEverything() {
     container.style.height = `${CONTAINER_HEIGHT * containerToPixelScale}px`
     // to make sure everything inside container is responsive (rabbit and ground, etc)
 }
+
 
 
