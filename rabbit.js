@@ -1,14 +1,23 @@
-'use strict'
+import { incrementCustomProp, getCustomProp, setCustomProp } from "./UpdateCustomerProp.js"
 
 const rabbitElement = document.querySelector('[data-rabbit]')
 const HOP_SPEED = 0.45
-const GRAVITY = 0.011
+const GRAVITY = 0.002
+const RABBIT_FRAME_COUNT = 4 //or 2 if doesnt work   
+const FRAME_TIME = 100 // every 100ms we change our animation
 
-let isRunning
 let isHopping
+let currentFrameTime
+let rabbitFrame
+let yVelocity
 export function setUpRabbit() {
-    isRunning = false
     isHopping = false
+    rabbitFrame = 0
+    currentFrameTime = 0
+    yVelocity = 0
+    setCustomProp(rabbitElement, '--bottom', 15)
+    document.removeEventListener('keydown', onHop) // need to make sure to first remove the event listener in case there already is one
+    document.addEventListener('keydown', onHop)
 }
 
 
@@ -18,20 +27,36 @@ export function updateRabbit(diff, speedScale) {
     handleHop(diff)
 }
 
-function handleRun(gameStart) {
+function handleRun(diff, speedScale) {
     if (isHopping) {
         rabbitElement.src = `images/rabbit-hop.png`
         return
     }
-    else {
-        rabbitElement.src = `images/rabbit-run.gif`
-    }
 
+    if (currentFrameTime >= FRAME_TIME) {
+        rabbitFrame = (rabbitFrame + 1) % RABBIT_FRAME_COUNT
+        rabbitElement.src = `images/rabbit-move-${rabbitFrame}.png`
+        currentFrameTime -= FRAME_TIME
+    }
+    currentFrameTime += diff * speedScale
 }
 
 function handleHop(diff) {
     if (!isHopping) return
+    // EXPLAINincrementing by yVelocity * diff because
+    incrementCustomProp(rabbitElement, '--bottom', yVelocity * diff)
+
+    if (getCustomProp(rabbitElement, '--bottom') <= 15) {       // 15 because this is the minimum value needed for the rabbit's position to be on top of the ground
+        setCustomProp(rabbitElement, '--bottom', 15)
+        isHopping = false
+    }
+    yVelocity -= GRAVITY * diff
+}
 
 
+function onHop(evt) {
+    if (evt.code !== 'Space' || isHopping) return
 
+    yVelocity = HOP_SPEED
+    isHopping = true
 }

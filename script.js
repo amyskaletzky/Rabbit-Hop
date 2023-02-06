@@ -54,7 +54,7 @@ function startGame() {
 
     startElement.classList.add('hide')
     setupGround()
-    setUpRabbit(hasGameStarted)
+    setUpRabbit()
     window.requestAnimationFrame(update)
 }
 
@@ -64,6 +64,7 @@ function resizeEverything() {
     if (window.innerWidth / window.innerHeight < CONTAINER_WIDTH / CONTAINER_HEIGHT) {
         containerToPixelScale = window.innerWidth / CONTAINER_WIDTH
     } else {
+        z
         containerToPixelScale = window.innerHeight / CONTAINER_HEIGHT
     }
 
