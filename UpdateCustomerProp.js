@@ -1,21 +1,20 @@
-///by taking a value from a css and converting it into a js value and back again to css variable
-//because everything on css is a string we create a function that convert to a float(number)
-/// and if there is not value just default '0'
+// Here are some helper functions to help us in:
+// updating the CSS values of a specific CSS variable
+// then converting it into a JS value
+// and then converting it back to a CSS variable
 
+
+// a function to get the value of the css property of the element of choice
 export function getCustomProp(elem, prop) {
-    console.log(parseFloat(getComputedStyle(elem).getPropertyValue(prop)))
-    // console.log("elem", elem);
-    return parseFloat(getComputedStyle(elem).getPropertyValue(prop)) || 0 // never read -> always starts 0
+    return parseFloat(getComputedStyle(elem).getPropertyValue(prop)) || 0 // parseFloat() as it returns the property value as a string by default
 }
 
-//After converting the values to float we need to use the computerd values
+// a function to set the value of the css property of the element of choice
 export function setCustomProp(elem, prop, value) {
-    elem.style.setProperty(prop, parseInt(value))
-    // console.log(elem.style);
+    elem.style.setProperty(prop, value)
 }
 
-//setting the values
+// a function to set and increment the value of the css property of the element of choice
 export function incrementCustomProp(elem, prop, inc) {
-    console.log(getCustomProp(elem, prop) + inc);
     setCustomProp(elem, prop, getCustomProp(elem, prop) + inc)
 }

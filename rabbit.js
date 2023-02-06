@@ -19,19 +19,13 @@ export function updateRabbit(diff, speedScale) {
 }
 
 function handleRun(gameStart) {
-    // if
     if (isHopping) {
         rabbitElement.src = `images/rabbit-hop.png`
         return
     }
     else {
-        rabbitElement.src = `images/rabbit-run.png`
-        rabbitElement.style.height = '40%'
+        rabbitElement.src = `images/rabbit-run.gif`
     }
-    // if (gameStart && !isHopping) {
-    //     rabbitElement.src = `images/rabbit-run.png`
-
-    // }   //trying to figure out how to make rabbit run img as soon as game starts/begins
 
 }
 

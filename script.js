@@ -1,5 +1,4 @@
-'use strict'
-import { updateGround, setupGround } from "./groundMoves.js"
+import { updateGround, setupGround } from "./ground.js"
 import { updateRabbit, setUpRabbit } from './rabbit.js'
 
 const CONTAINER_WIDTH = 100
@@ -7,8 +6,6 @@ const CONTAINER_HEIGHT = 30
 const INCREASE_SPEED_BY = 0.00001
 
 
-const ground = document.querySelector('.ground')
-const rabbit = document.querySelector('.rabbit')
 const container = document.querySelector('[data-container]')
 const scoreElement = document.querySelector('[data-score]')
 const startElement = document.querySelector('[data-start]')
@@ -22,31 +19,29 @@ let speedScale
 let score
 let hasGameStarted = false
 function update(timeNow) {
-    if (lastUpdateTime === null) {
+    if (lastUpdateTime == null) {
         lastUpdateTime = timeNow
-        window.requestAnimationFrame(update)                //write explanation
+        window.requestAnimationFrame(update)
         return
     }
     const diff = timeNow - lastUpdateTime
-    updateGround(diff)
 
-    // add another parameter to updateGround(diff, speedScale)
+    updateGround(diff, speedScale)
     updateRabbit(diff, speedScale)
-    increaseSpeedGradually(diff)
+    updateSpeedScale(diff)
     updateScore(diff)
 
     lastUpdateTime = timeNow
     window.requestAnimationFrame(update)
 }
-// window.requestAnimationFrame(update)
 
-function increaseSpeedGradually(diff) {
+function updateSpeedScale(diff) {
     speedScale += diff * INCREASE_SPEED_BY          // to cause the ground to gradually move faster, like in the original game so it becomes more and more difficult
 }
 
 function updateScore(diff) {
     if (!hasGameStarted) score = 0
-    score += diff * 0.01      // one point added to score for every 100ms that pass
+    score += diff * 0.01            // one point added to score for every 100ms that pass
     scoreElement.textContent = Math.floor(score)
 }
 
@@ -56,15 +51,14 @@ function startGame() {
     lastUpdateTime = null
     speedScale = 1
     score = 0
-    setupGround()
 
     startElement.classList.add('hide')
+    setupGround()
     setUpRabbit(hasGameStarted)
-    // call the set up ground function here !!!
     window.requestAnimationFrame(update)
 }
 
-
+// this function makes sure everything inside the container is responsive (rabbit and ground, etc)
 function resizeEverything() {
     let containerToPixelScale
     if (window.innerWidth / window.innerHeight < CONTAINER_WIDTH / CONTAINER_HEIGHT) {
@@ -75,7 +69,6 @@ function resizeEverything() {
 
     container.style.width = `${CONTAINER_WIDTH * containerToPixelScale}px`
     container.style.height = `${CONTAINER_HEIGHT * containerToPixelScale}px`
-    // to make sure everything inside container is responsive (rabbit and ground, etc)
 }
 
 
