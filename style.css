@@ -55,8 +55,9 @@ body {
 .easter-egg {
     position: absolute;
     left: calc(var(--left) * 1%);
-    height: 30%;
-    bottom: calc(var(--bottom) * 1%);
+    height: 20%;
+    bottom: 0;
+    /* bottom: calc(var(--bottom) * 1%); */
 }
 
 .hide {
