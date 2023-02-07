@@ -1,5 +1,7 @@
 import { updateGround, setupGround } from "./ground.js"
 import { updateRabbit, setUpRabbit } from './rabbit.js'
+import { updateEasterEggs, setupEasterEggs } from './easterEggs.js'
+
 
 const CONTAINER_WIDTH = 100
 const CONTAINER_HEIGHT = 30
@@ -28,6 +30,7 @@ function update(timeNow) {
 
     updateGround(diff, speedScale)
     updateRabbit(diff, speedScale)
+    updateEasterEggs(diff, speedScale)
     updateSpeedScale(diff)
     updateScore(diff)
 
@@ -52,9 +55,11 @@ function startGame() {
     speedScale = 1
     score = 0
 
-    startElement.classList.add('hide')
     setupGround()
     setUpRabbit()
+    setupEasterEggs()
+
+    startElement.classList.add('hide')
     window.requestAnimationFrame(update)
 }
 

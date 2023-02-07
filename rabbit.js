@@ -4,7 +4,7 @@ const rabbitElement = document.querySelector('[data-rabbit]')
 const HOP_SPEED = 0.45
 const GRAVITY = 0.002
 const RABBIT_FRAME_COUNT = 4 //or 2 if doesnt work   
-const FRAME_TIME = 100 // every 100ms we change our animation
+const FRAME_TIME = 150 // every 100ms we change our animation
 
 let isHopping
 let currentFrameTime
