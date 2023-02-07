@@ -1,6 +1,6 @@
 import { setCustomProp, incrementCustomProp, getCustomProp } from "./UpdateCustomerProp.js"
 
-const SPEED = 0.001     // same speed as ground moving
+const SPEED = 0.04      // same speed as ground moving
 
 // these are intervals for how long between summoning an egg on the screen
 const EGGS_INTERVAL_MIN = 500           // min = 500ms 
@@ -22,7 +22,7 @@ export function updateEasterEggs(diff, speedScale) {
     eggs.forEach(egg => {
         incrementCustomProp(egg, "--left", diff * speedScale * SPEED * -1)
         if (getCustomProp(egg, "--left") <= -100) {
-            egg.parentElement.remove()
+            egg.remove()
         }
     })
 
