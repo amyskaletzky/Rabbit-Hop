@@ -3,17 +3,18 @@
 
 ## Description
 
-This is a code for a game where you play as a rabbit who needs to avoid hitting Easter egg.
+This is a code for a game where you play as a rabbit who needs to avoid hitting Easter eggs.
 The code sets up the game screen, keeps track of your score, and starts the game when you press a key.
 As you play, the code continually updates the game to show the movement of the ground, rabbit, and eggs.
-The code also checks if you hit an egg and if so, the rabbit loses and the game starts over, and the code also makes the game look good on different screen sizes.
+It also checks if you hit an egg and if so, the rabbit loses and the game starts all over again.
+extra feature the code also makes the game look good on different screen sizes!
 
 ![](https://i.ibb.co/0mgxXrQ/Start-Game-bunny.png)
 
 [Video Explanation Link](https://www.kapwing.com/videos/63e20799c2627900180cee14)
 ![](https://cdn-useast1.kapwing.com/final_63e20955af4b930061bbf238_324962.gif)
 
-### Our Conflicts
+### Our Conflicts Throughout The Challange
 
 We encountered a conflict with the moving ground script and the Easter eggs functions. To resolve this issue, we made some changes to the way the ground was set up. Initially, we set up the ground using a div element. However, this caused problems with the way the ground moved and interacted with the Easter eggs.
 
