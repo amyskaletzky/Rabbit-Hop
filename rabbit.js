@@ -15,7 +15,7 @@ export function setUpRabbit() {
     rabbitFrame = 0
     currentFrameTime = 0
     yVelocity = 0
-    setCustomProp(rabbitElement, '--bottom', 15)
+    setCustomProp(rabbitElement, '--bottom', 22)
     document.removeEventListener('keydown', onHop) // need to make sure to first remove the event listener in case there already is one
     document.addEventListener('keydown', onHop)
 }
@@ -25,6 +25,14 @@ export function setUpRabbit() {
 export function updateRabbit(diff, speedScale) {
     handleRun(diff, speedScale)
     handleHop(diff)
+}
+
+export function getRabbitRect() {
+    return rabbitElement.getBoundingClientRect()
+}
+
+export function setRabbitLose() {
+    rabbitElement.src = `images/cry.png`
 }
 
 function handleRun(diff, speedScale) {
@@ -46,17 +54,19 @@ function handleHop(diff) {
     // EXPLAINincrementing by yVelocity * diff because
     incrementCustomProp(rabbitElement, '--bottom', yVelocity * diff)
 
-    if (getCustomProp(rabbitElement, '--bottom') <= 15) {       // 15 because this is the minimum value needed for the rabbit's position to be on top of the ground
-        setCustomProp(rabbitElement, '--bottom', 15)
+    if (getCustomProp(rabbitElement, '--bottom') <= 22) {       // 15 because this is the minimum value needed for the rabbit's position to be on top of the ground
+        setCustomProp(rabbitElement, '--bottom', 22)
         isHopping = false
     }
     yVelocity -= GRAVITY * diff
 }
 
-
+const hopSound = new Audio('/bunny-hop-sounds/Jump-sound.mp3') //hop sounds
 function onHop(evt) {
     if (evt.code !== 'Space' || isHopping) return
 
     yVelocity = HOP_SPEED
     isHopping = true
+    hopSound.currentTime = 0;
+    hopSound.play();
 }

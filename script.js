@@ -1,6 +1,6 @@
 import { updateGround, setupGround } from "./ground.js"
-import { updateRabbit, setUpRabbit } from './rabbit.js'
-import { updateEasterEggs, setupEasterEggs } from './easterEggs.js'
+import { updateRabbit, setUpRabbit, getRabbitRect, setRabbitLose } from './rabbit.js'
+import { updateEasterEggs, setupEasterEggs, getEggsRects } from './easterEggs.js'
 
 
 const CONTAINER_WIDTH = 100
@@ -33,10 +33,23 @@ function update(timeNow) {
     updateEasterEggs(diff, speedScale)
     updateSpeedScale(diff)
     updateScore(diff)
+    if(checkLose()) return handleLose() //stop updating
 
     lastUpdateTime = timeNow
     window.requestAnimationFrame(update)
 }
+
+function checkLose() {
+    const rabbitRect = getRabbitRect()
+    return getEggsRects().some(rect => isCollision(rect, rabbitRect))
+}
+
+function isCollision(rect1, rect2) {
+    return rect1.left < rect2.right &&
+    rect1.top < rect2.bottom && 
+    rect1.right > rect2.left &&
+    rect1.bottom > rect2.top
+} 
 
 function updateSpeedScale(diff) {
     speedScale += diff * INCREASE_SPEED_BY          // to cause the ground to gradually move faster, like in the original game so it becomes more and more difficult
@@ -58,9 +71,24 @@ function startGame() {
     setupGround()
     setUpRabbit()
     setupEasterEggs()
+    musicStart()
 
     startElement.classList.add('hide')
     window.requestAnimationFrame(update)
+}
+
+function handleLose() {
+    setRabbitLose()
+    audioStart.pause();
+    audioStart.currentTime = 0;
+    
+    let loseAudio = new Audio();
+    loseAudio.src = "bunny-hop-sounds/game-over.mp3";
+    loseAudio.play();
+
+    setTimeout(() => {
+        document.addEventListener("keydown", startGame, {once: true})
+        startElement.classList.remove("hide")}, 100) //we added it so it wont automaticlly start the game
 }
 
 // this function makes sure everything inside the container is responsive (rabbit and ground, etc)
@@ -78,4 +106,10 @@ function resizeEverything() {
 }
 
 
+const audioStart = new Audio()
+function musicStart() {
+audioStart.src="bunny-hop-sounds/bg-music.mp3";
+audioStart.volume = 0.5; // adjust the volume to 0.5 (half of the max volume)
+audioStart.play();
+}
 
