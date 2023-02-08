@@ -52,8 +52,8 @@ function createEgg() {
 
 ### Sorcses and Copyrights
 * [MapleStory Wiki](https://maplestory.wiki/THMS/20.1.0) Images created by MapleStory (All images were customized, photoshoped and redesigned)
-* [Background Music](shorturl.at/dQX79)
-* [Game Over Sound](shorturl.at/huBNT)
+* [Background Music](https://www.youtube.com/watch?v=AVK0BIVqLLc&ab_channel=frad)
+* [Game Over Sound](https://www.youtube.com/watch?v=tJMpFs_hAfM&ab_channel=It%27sSia)
 
 ### Contributors names and contact info
 
